@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { View, Text } from 'react-native';
 import { ColorPicker } from 'react-native-color-picker';
-import { sendColorToDevice } from './BluetoothModule';
 
 const ColorPickerScreen = ({ route }) => {
   const { device } = route.params;
@@ -12,42 +11,24 @@ const ColorPickerScreen = ({ route }) => {
   };
 
   const handleSendColor = () => {
-    sendColorToDevice(device, selectedColor)
-      .then(() => {
-        console.log('Color sent successfully');
-      })
-      .catch((error) => {
-        console.log('Error sending color:', error);
-      });
+    // Send the selected color (selectedColor) to the connected device (device)
+    // Implement your code here to send the color via Bluetooth to the device
+    console.log('Sending color', selectedColor, 'to device:', device.name);
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.selectedColorText}>Selected Color: {selectedColor}</Text>
+    <View>
+      <Text>Select a color:</Text>
       <ColorPicker
+        style={{ flex: 1 }}
+        defaultColor={selectedColor}
         onColorChange={handleColorChange}
-        style={styles.colorPicker}
-        color={selectedColor}
+        hideSliders={true}
+        hideControls={true}
       />
       <Button title="Send Color" onPress={handleSendColor} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  selectedColorText: {
-    fontSize: 20,
-    marginBottom: 16,
-  },
-  colorPicker: {
-    width: '80%',
-    height: 300,
-  },
-});
 
 export default ColorPickerScreen;
