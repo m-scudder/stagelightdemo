@@ -62,13 +62,30 @@ const App = () => {
     );
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
       ).then(result => {
         if (result) {
           console.log('Permission is OK');
         } else {
           PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+          ).then(result => {
+            if (result) {
+              console.log('User accept');
+            } else {
+              console.log('User refuse');
+            }
+          });
+        }
+      });
+      PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+      ).then(result => {
+        if (result) {
+          console.log('Permission is OK');
+        } else {
+          PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
           ).then(result => {
             if (result) {
               console.log('User accept');
@@ -222,7 +239,7 @@ const App = () => {
                 textAlign: 'center',
                 color: isDarkMode ? Colors.white : Colors.black,
               }}>
-              React Native BLE Manager Tutorial
+              StageLight
             </Text>
           </View>
           <TouchableOpacity
@@ -248,7 +265,6 @@ const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   mainBody: {
     flex: 1,
-    justifyContent: 'center',
     height: windowHeight,
   },
   buttonStyle: {
